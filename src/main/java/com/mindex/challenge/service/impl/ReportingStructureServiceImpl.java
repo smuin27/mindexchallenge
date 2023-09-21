@@ -42,7 +42,11 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         List<Employee> reports = employee.getDirectReports();
         Employee currentEmployee = employee;
 
-        // I also considered a recursive approach here, but chose this iterative approach for performance reasons
+        /*  I also considered a recursive approach here, but chose this iterative approach for performance reasons
+            This approach keeps a 'queue' or list of the reports that haven't been queried yet. then goes through that
+            list to find out if any of those reports have reports of their own until it reaches the point where there are
+            no longer any reports to query. then returns the number of reports that were found along the way
+        */
         while(reports.size() > 0) {
             numberOfReports++;
             currentEmployee = employeeRepository.findByEmployeeId(reports.get(0).getEmployeeId());

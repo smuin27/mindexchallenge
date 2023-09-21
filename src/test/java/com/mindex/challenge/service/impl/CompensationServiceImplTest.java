@@ -49,6 +49,7 @@ public class CompensationServiceImplTest {
 
     @Test
     public void testCreateRead() {
+        //create a test employee
         Employee testEmployee = new Employee();
         testEmployee.setFirstName("Jack");
         testEmployee.setLastName("Alexander");
@@ -56,19 +57,20 @@ public class CompensationServiceImplTest {
         testEmployee.setPosition("Manager");
         Employee createdEmployee = restTemplate.postForEntity(employeeUrl, testEmployee, Employee.class).getBody();
 
+        //create compensation details using the test employee ID
         CompensationDetails testCompensationDetails = new CompensationDetails();
         testCompensationDetails.setEmployeeId(createdEmployee.getEmployeeId());
         testCompensationDetails.setSalary("100,000,000,000 USD");
         testCompensationDetails.setEffectiveDate(new Date());
 
-        // Create checks
+        // check that the compensation details were created as expected
         CompensationDetails createdCompensationDetails = restTemplate.postForEntity(compensationUrl, testCompensationDetails, CompensationDetails.class).getBody();
 
         assertNotNull(createdCompensationDetails);
         assertEquals(testCompensationDetails.getSalary(), createdCompensationDetails.getSalary());
         assertEquals(testCompensationDetails.getEffectiveDate(), createdCompensationDetails.getEffectiveDate());
 
-        // Read checks
+        // check that the compensation details return as expected
         Compensation readCompensation = restTemplate.getForEntity(compensationIdUrl, Compensation.class, testCompensationDetails.getEmployeeId()).getBody();
 
         assertEquals(testCompensationDetails.getEmployeeId(), readCompensation.getEmployee().getEmployeeId());
