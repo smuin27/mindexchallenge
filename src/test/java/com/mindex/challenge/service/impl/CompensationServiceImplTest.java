@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CompensationServiceImplTest {YoOkfjT0$G@uA!t@
+public class CompensationServiceImplTest {
 
     private String compensationUrl;
     private String compensationIdUrl;
